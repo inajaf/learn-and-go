@@ -19,15 +19,15 @@ In a real application the same data looks different at different levels:
 HTTP request         →  Business logic     →  Database
 CreateOrderRequest      Order (domain)        OrderRow
 {                       {                     {
-  customer_id: "x"      ID: "ord-123"         id: "ord-123"
-  amount: 100           CustomerID: "x"       customer_id: "x"
-}                       Amount: 100           amount: 100
-                        Status: pending       status: "pending"
-                        CreatedAt: ...        created_at: ...
-                        UpdatedAt: ...        updated_at: ...
-                    }                         deleted_at: NULL
-                                              version: 1
-                                          }
+  customer_id: "x"        ID: "ord-123"         id: "ord-123"
+  amount: 100             CustomerID: "x"       customer_id: "x"
+}                         Amount: 100           amount: 100
+                          Status: pending       status: "pending"
+                          CreatedAt: ...        created_at: ...
+                          UpdatedAt: ...        updated_at: ...
+                        }                       deleted_at: NULL
+                                                version: 1
+                                             }
 ```
 
 ### If you use one struct for everything — problems:
