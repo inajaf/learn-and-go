@@ -23,11 +23,11 @@ Instead of “you send an HTTP request and parse JSON” -
 ```
 Without gRPC (REST):                With gRPC:
 ──────────────────────────────      ─────────────────────────────
-http.Post("/orders", jsonBody)  vs  client.CreateOrder(ctx, req)
-↓ marshal JSON ↓ Protobuf encode (binary)
+http.Post("/orders", jsonBody)  vs  ↓ client.CreateOrder(ctx, req)
+↓ marshal JSON                      ↓ Protobuf encode (binary)
 ↓ HTTP POST                         ↓ HTTP/2
 ↓ unmarshal JSON                    ↓ Protobuf decode
-↓ check the fields manually ↓ ready Go structure
+↓ check the fields manually         ↓ ready Go structure
 ```
 
 ---
