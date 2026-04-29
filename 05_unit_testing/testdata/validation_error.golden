@@ -1,0 +1,13 @@
+{
+  "details": [
+    {
+      "field": "customer_id",
+      "message": "required field"
+    },
+    {
+      "field": "amount",
+      "message": "must be greater than 0"
+    }
+  ],
+  "error": "validation failed"
+}

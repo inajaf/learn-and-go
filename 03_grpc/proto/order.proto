@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package order;
+
+//👉 go_package - where to put the generated code
+option go_package = "learning_path/03_grpc/gen;orderpb";
+
+// ─────────────────────────────────────────────────────────────────
+//Protobuf is a language for describing data structures and services.
+//It is independent of the programming language.
+//From one .proto file you can generate code for Go, Python, Java, etc.
+// ─────────────────────────────────────────────────────────────────
+
+//OrderService - gRPC service for working with orders.
+//👉 'service' is like an interface in Go, but between services over a network.
+service OrderService {
+  //CreateOrder creates a new order.
+  rpc CreateOrder(CreateOrderRequest) returns (OrderResponse);
+
+  //GetOrder returns an order by ID.
+  rpc GetOrder(GetOrderRequest) returns (OrderResponse);
+
+  //ListOrders returns all orders (Server-Side Streaming).
+  //👉 'stream' means that the server sends several messages in a row.
+  rpc ListOrders(ListOrdersRequest) returns (stream OrderResponse);
+}
+
+//CreateOrderRequest - parameters for creating an order.
+//👉 Each field has a number (= 1, = 2...).
+//This is the field number in binary format. NEVER change numbers - you will break compatibility!
+message CreateOrderRequest {
+  string customer_id = 1;
+  double amount = 2;
+}
+
+//GetOrderRequest - parameters for receiving an order.
+message GetOrderRequest {
+  string id = 1;
+}
+
+//ListOrdersRequest - parameters for receiving a list (empty, but required).
+message ListOrdersRequest {}
+
+//OrderResponse - response with order data.
+message OrderResponse {
+  string id = 1;
+  string customer_id = 2;
+  double amount = 3;
+  string status = 4;
+  string created_at = 5;
+}

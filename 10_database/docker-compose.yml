@@ -1,0 +1,28 @@
+# docker-compose.yml для Модуля 10 — работа с базой данных
+#
+# Запуск:    docker compose up -d
+# Остановка: docker compose down
+# Сброс БД:  docker compose down -v
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: learning_path_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: orders_user
+      POSTGRES_PASSWORD: orders_pass
+      POSTGRES_DB: orders_db
+    ports:
+      - "5433:5432"   # 5433 чтобы не конфликтовать с другими Postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orders_user -d orders_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
+

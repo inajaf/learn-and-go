@@ -1,0 +1,7 @@
+{
+  "id": "ord-NORMALIZED",
+  "customer_id": "cust-golden",
+  "amount": 199.99,
+  "status": "pending",
+  "created_at": "2024-01-15T10:00:00Z"
+}
