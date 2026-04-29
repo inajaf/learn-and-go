@@ -129,7 +129,7 @@ func TestConflictError(t *testing.T) {
 
 	assert.ErrorIs(t, err, ErrConflict)
 	assert.Contains(t, err.Error(), "version 3")
-	assert.Contains(t, err.Error(), "current 5")
+	assert.Contains(t, err.Error(), "current version 5")
 }
 
 func TestOperationError(t *testing.T) {

@@ -49,7 +49,7 @@ func testDSN() string {
 		return dsn
 	}
 	//Values ​​from 10_database/docker-compose.yml
-	return "host=localhost port=5433 user=orders_user password=orders_pass dbname=orders_db sslmode=disable"
+	return "host=localhost port=5434 user=orders_user password=orders_pass dbname=orders_db sslmode=disable"
 }
 
 // ─────────────────────────────────────────────────────────────────

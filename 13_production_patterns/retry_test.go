@@ -58,7 +58,7 @@ func TestRetry_AllAttemptsFail(t *testing.T) {
 	})
 
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "all 3 attempts are exhausted")
+	assert.Contains(t, err.Error(), "all 3 attempts exhausted")
 	assert.Contains(t, err.Error(), "permanent error")
 }
 

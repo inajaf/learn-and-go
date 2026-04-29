@@ -99,7 +99,7 @@ func TestResilientInventoryChecker_CircuitOpensOnFailures(t *testing.T) {
 	//👉 The next call to CheckStock is fail fast (inventory is not even called)
 	_, err := resilient.CheckStock("item-1", 1)
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "circuit breaker open")
+	assert.Contains(t, err.Error(), "circuit breaker is open")
 }
 
 // =============================================================================
@@ -140,7 +140,7 @@ func TestCircuitBreakerIntegration_FailsGracefully(t *testing.T) {
 	//👉 Instant failure - doesn’t even call inventory
 	_, err := resilient.CheckStock("any", 1)
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "circuit breaker open")
+	assert.Contains(t, err.Error(), "circuit breaker is open")
 
 	//Add stock and wait for reset timeout
 	inventory.AddStock("item-1", 10)

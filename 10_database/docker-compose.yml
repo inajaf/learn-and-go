@@ -1,8 +1,6 @@
-# docker-compose.yml для Модуля 10 — работа с базой данных
-#
-# Запуск:    docker compose up -d
-# Остановка: docker compose down
-# Сброс БД:  docker compose down -v
+# Start:    docker compose up -d
+# Stop: docker compose down
+# Reset БД:  docker compose down -v
 
 services:
   postgres:
@@ -14,7 +12,7 @@ services:
       POSTGRES_PASSWORD: orders_pass
       POSTGRES_DB: orders_db
     ports:
-      - "5433:5432"   # 5433 чтобы не конфликтовать с другими Postgres
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
