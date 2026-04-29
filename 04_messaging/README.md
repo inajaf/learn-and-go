@@ -223,7 +223,7 @@ Without DLQ:
 
 With DLQ:
   event → handler (error) → retry 1 → retry 2 → retry 3 → DLQ
-                                                              ↓
+                                                           ↓
                                                   Alert → Developer investigates
 ```
 
