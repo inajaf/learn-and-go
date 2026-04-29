@@ -1,4 +1,4 @@
-# 🎓 Go Microservices – Educational Project (Senior Edition)
+# 🎓 Learn and Go
 
 This project will teach you how to write microservices in Go correctly.  
 Each module is a separate folder with code, explanations and working tests.
