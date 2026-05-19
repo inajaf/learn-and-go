@@ -27,6 +27,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -57,7 +58,7 @@ func goldenFile(t *testing.T, name string, actual []byte) []byte {
 		"golden file not found: %s\nRun with -update to create it: go test -run %s -update",
 		path, t.Name())
 
-	return expected
+	return []byte(strings.ReplaceAll(string(expected), "\r\n", "\n"))
 }
 
 // =============================================================================

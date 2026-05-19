@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	orderpb "learning_path/03_grpc/gen"
@@ -12,6 +13,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
+
+var orderIDSeq uint64
 
 // ─────────────────────────────────────────────────────────────────
 //OrderServer is a gRPC server implementation.
@@ -63,13 +66,14 @@ func (s *OrderServer) CreateOrder(ctx context.Context, req *orderpb.CreateOrderR
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	id := fmt.Sprintf("order-%d", time.Now().UnixNano())
+	now := time.Now()
+	id := fmt.Sprintf("order-%d-%d", now.UnixNano(), atomic.AddUint64(&orderIDSeq, 1))
 	o := &order{
 		id:         id,
 		customerID: req.GetCustomerId(),
 		amount:     req.GetAmount(),
 		status:     "pending",
-		createdAt:  time.Now(),
+		createdAt:  now,
 	}
 	s.orders[id] = o
 

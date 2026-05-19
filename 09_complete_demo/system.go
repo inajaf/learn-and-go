@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -34,7 +35,9 @@ var (
 	ErrInvalidInput      = errors.New("invalid input")
 )
 
-//OrderStatus - Value Object (Module 1: domain.go)
+var orderIDSeq uint64
+
+// OrderStatus - Value Object (Module 1: domain.go)
 type OrderStatus string
 
 const (
@@ -190,7 +193,7 @@ func requestToDomain(req CreateOrderRequest) (*Order, error) {
 
 	now := time.Now()
 	return &Order{
-		ID:         fmt.Sprintf("order-%d", now.UnixNano()),
+		ID:         fmt.Sprintf("order-%d-%d", now.UnixNano(), atomic.AddUint64(&orderIDSeq, 1)),
 		CustomerID: req.CustomerID,
 		Items:      items,
 		Status:     StatusPending,

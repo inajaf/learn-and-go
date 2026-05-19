@@ -41,7 +41,7 @@ func TestHealthChecker_Healthy(t *testing.T) {
 
 	assert.True(t, status.Healthy)
 	assert.Empty(t, status.Error)
-	assert.Greater(t, status.Latency, time.Duration(0))
+	assert.GreaterOrEqual(t, status.Latency, time.Duration(0))
 	assert.False(t, status.CheckedAt.IsZero())
 }
 

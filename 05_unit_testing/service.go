@@ -10,6 +10,7 @@ package unittest
 import (
 	"errors"
 	"fmt"
+	"sync/atomic"
 	"time"
 )
 
@@ -24,6 +25,8 @@ const (
 
 // ErrNotFound — order not found.
 var ErrNotFound = errors.New("order not found")
+
+var orderIDSeq uint64
 
 // Order — domain model.
 type Order struct {
@@ -73,12 +76,13 @@ func (s *OrderService) PlaceOrder(customerID string, amount float64) (*Order, er
 		return nil, fmt.Errorf("PlaceOrder: amount must be positive")
 	}
 
+	now := time.Now()
 	order := &Order{
-		ID:         fmt.Sprintf("ord-%d", time.Now().UnixNano()),
+		ID:         fmt.Sprintf("ord-%d-%d", now.UnixNano(), atomic.AddUint64(&orderIDSeq, 1)),
 		CustomerID: customerID,
 		Amount:     amount,
 		Status:     StatusPending,
-		CreatedAt:  time.Now(),
+		CreatedAt:  now,
 	}
 
 	// Step 1: Save to the repository

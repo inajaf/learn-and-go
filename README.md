@@ -6,6 +6,10 @@ Each module is a separate folder with code, explanations and working tests.
 **Target audience:** Middle → Senior Go-developer.  
 **Approach:** theory + code + tests + “as in production”.
 
+If you prefer diagrams before details, start with [`VISUAL_GUIDE.md`](VISUAL_GUIDE.md). It shows the course path, request flow, layer boundaries, communication choices, and a few compact code shapes.
+
+If a module feels too dense, use [`STUDY_GUIDE.md`](STUDY_GUIDE.md). It gives every module a simple explanation, first files to read, a small practice task, and a checkpoint.
+
 ---
 
 ## 🗺️ Learning Map
@@ -52,25 +56,64 @@ Each module is a separate folder with code, explanations and working tests.
 
 ---
 
-## 🔀 Module dependency map
+## 🔀 Module relationship map
 
-```
-01 Interfaces (foundation)
-├── 02 DTO
-├── 11 Pointers
-├── 03 gRPC
-├── 04 Messaging
-│   └── 08 Communication Patterns (Saga, Outbox, CQRS)
-├── 05 Unit Testing
-│   └── 06 Integration Testing
-├── 14 Error Handling ← NEW
-├── 13 Production Patterns ← NEW (context, slog, config, retry, circuit breaker)
-│   └── 12 HTTP API ← NEW (handlers, middleware)
-└── 15 Concurrency ← NEW (worker pool, fan-out, rate limiter)
+This is a relationship map, not a strict sequence. Use **Study order** below for the recommended learning path.
 
-07 Capstone (combines 01-06)
-09 Complete Demo (combines everything)
-10 Database (PostgreSQL, requires Docker)
+```mermaid
+flowchart TD
+    subgraph Foundation
+        P["11 Pointers"]
+        I["01 Interfaces"]
+        E["14 Error Handling"]
+        D["02 DTO"]
+    end
+
+    subgraph Transports["Service Transports"]
+        H["12 HTTP API"]
+        G["03 gRPC"]
+        M["04 Messaging"]
+    end
+
+    subgraph Reliability["Production Reliability"]
+        PP["13 Production Patterns"]
+        C["15 Concurrency"]
+        CP["08 Communication Patterns"]
+    end
+
+    subgraph Testing
+        T["05 Unit Testing"]
+        IT["06 Integration Testing"]
+    end
+
+    subgraph Assembly
+        CAP["07 Capstone"]
+        DEMO["09 Complete Demo"]
+        DB["10 Database"]
+    end
+
+    P -. "optional if needed" .-> I
+    I --> D
+    I --> E
+    E --> H
+    D --> H
+    H --> G
+    H --> M
+    PP --> H
+    PP --> G
+    PP --> M
+    C --> PP
+    G --> CP
+    M --> CP
+    I --> T
+    T --> IT
+    D --> CAP
+    E --> CAP
+    H --> CAP
+    G --> DEMO
+    M --> DEMO
+    CP --> DEMO
+    DB --> DEMO
 ```
 
 ---
