@@ -11,6 +11,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sync/atomic"
 	"time"
 )
 
@@ -20,6 +21,8 @@ import (
 
 var ErrOrderNotFound = errors.New("order not found")
 var ErrInvalidInput = errors.New("invalid input")
+
+var orderIDSeq uint64
 
 type OrderStatus string
 
@@ -128,13 +131,14 @@ func requestToDomain(req CreateOrderRequest) (*Order, error) {
 		}
 	}
 
+	now := time.Now()
 	return &Order{
-		ID:         fmt.Sprintf("order-%d", time.Now().UnixNano()),
+		ID:         fmt.Sprintf("order-%d-%d", now.UnixNano(), atomic.AddUint64(&orderIDSeq, 1)),
 		CustomerID: req.CustomerID,
 		Items:      items,
 		Status:     StatusPending,
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
+		CreatedAt:  now,
+		UpdatedAt:  now,
 	}, nil
 }
 

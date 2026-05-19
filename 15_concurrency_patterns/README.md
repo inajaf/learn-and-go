@@ -1,4 +1,4 @@
-# ⚡ Module 15: Concurrency Patterns - Competition for services
+# ⚡ Module 15: Concurrency Patterns - Concurrency for services
 
 Go is built for competition. Goroutines + channels - the basis,
 but in production you need the right patterns.
